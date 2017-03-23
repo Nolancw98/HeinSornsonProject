@@ -25,7 +25,10 @@ public class LoginReader{
     {
         log = "users.txt";
     }
-    
+    public Hashtable<String, String> getTable()
+    {
+        return t;
+    }
     public void write()
     {
         ObjectOutputStream outputStream = null;
