@@ -24,6 +24,7 @@ public class ChatServer {
     //Does this work?
     //Unique names of clients
     private static HashSet<String> names = new HashSet<String>();
+    private static HashSet<String> passwords = new HashSet<String>();
     
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
@@ -52,6 +53,7 @@ public class ChatServer {
     }
     private static class Handler extends Thread {
         private String name;
+        private int newUser;
         private Socket socket;
         private BufferedReader in;
         private PrintWriter out;
@@ -69,19 +71,36 @@ public class ChatServer {
                 out = new PrintWriter(socket.getOutputStream(), true);
                 while(true)
                 {
+                    out.println("NEWUSER");
+                    newUser = in.read();
+                    if(newUser == 0)
+                    {
+                        out.println("CREATEACCOUNT");
+                        name = in.readLine();
+                        if(name == null)
+                        {
+                            return;
+                        }
+                        synchronized(names)
+                        {
+                            if(!names.contains(name)){
+                                names.add(name);
+                                break;
+                            }
+                        }
+                        
+                    }
                     out.println("SUBMITNAME");
                     name = in.readLine();
                     if(name == null)
                     {
                         return;
                     }
-                    synchronized(names)
+                    if(names.contains(name))
                     {
-                        if(!names.contains(name)){
-                            names.add(name);
-                            break;
-                        }
+                        break;
                     }
+                    
                 }
                 out.println("NAMEACCEPTED");
                 writers.add(out);

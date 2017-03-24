@@ -9,19 +9,19 @@ package smplatform;
  *
  * @author nolancw98
  */
-public class Entry<U,P> {
-    private U user;
-    private P pass;
-    public Entry(U user, P pass)
+public class Entry {
+    private String user;
+    private String pass;
+    public Entry(String user, String pass)
     {
         this.user = user;
         this.pass = pass;
     }
-    public U getUser()
+    public String getUser()
     {
         return user;
     }
-    public P getPass()
+    public String getPass()
     {
         return pass;
     }
