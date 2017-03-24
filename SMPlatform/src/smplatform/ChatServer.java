@@ -33,6 +33,7 @@ public class ChatServer {
     
     public static void main(String[] args) throws Exception
     {
+        //log = (Queue<String>) files.read("log.txt");
         System.out.println("The chat server is running.");
         ServerSocket listener = new ServerSocket(PORT);
         try
@@ -44,6 +45,8 @@ public class ChatServer {
         }
         finally
         {
+            System.out.println("Test");
+            files.write(log, "log.txt");
             listener.close();
         }
     }
