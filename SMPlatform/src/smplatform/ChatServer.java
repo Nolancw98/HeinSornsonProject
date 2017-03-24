@@ -17,7 +17,7 @@ import java.util.HashSet;
  */
 public class ChatServer {
     private static final int PORT = 9001;
-    
+    //Does this work?
     //Unique names of clients
     private static HashSet<String> names = new HashSet<String>();
     
