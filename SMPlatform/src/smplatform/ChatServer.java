@@ -97,6 +97,7 @@ public class ChatServer {
                 {
                     String input = in.readLine();
                     log.add(input);
+                    files.write(log, "log.txt");
                     //Where the server takes in chatted things
                     System.out.println(input);
                     if(input == null)
