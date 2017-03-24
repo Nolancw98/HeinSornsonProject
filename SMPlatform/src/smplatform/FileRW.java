@@ -18,46 +18,40 @@ import java.util.logging.Logger;
  *
  * @author nolancw98
  */
-public class LoginReader{
-    private String log;
-    private Hashtable<String, String> t = new Hashtable<>();
-    public LoginReader()
+public class FileRW{
+    public FileRW()
     {
-        log = "users.txt";
     }
-    public Hashtable<String, String> getTable()
-    {
-        return t;
-    }
-    public void write()
+    public void write(Object o, String fileName)
     {
         ObjectOutputStream outputStream = null;
         try {
-            outputStream = new ObjectOutputStream(new FileOutputStream(log));
+            outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
         } catch (Exception e) {
-            Logger.getLogger(LoginReader.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(FileRW.class.getName()).log(Level.SEVERE, null, e);
         }
         try {
-            outputStream.writeObject(t);
+            outputStream.writeObject(o);
         } catch (IOException ex) {
-            Logger.getLogger(LoginReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileRW.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void read()
+    public Object read(String fileName)
     {
         ObjectInputStream inputStream = null;
         try{
-            inputStream = new ObjectInputStream(new FileInputStream(log));
+            inputStream = new ObjectInputStream(new FileInputStream(fileName));
         }
         catch(Exception e)
         {
-            Logger.getLogger(LoginReader.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(FileRW.class.getName()).log(Level.SEVERE, null, e);
         }
         try {
-            t = (Hashtable<String, String>)inputStream.readObject();
+            return (Object)inputStream.readObject();
         } catch (Exception ex) {
-            Logger.getLogger(LoginReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileRW.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

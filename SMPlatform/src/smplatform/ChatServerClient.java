@@ -50,7 +50,7 @@ public class ChatServerClient {
     {
         return JOptionPane.showInputDialog(frame, "Choose a username:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
     }
-    private void run() throw IOException
+    private void run() throws IOException
     {
         String serverAddress = getServerAddress();
         Socket socket = new Socket(serverAddress, 9001);

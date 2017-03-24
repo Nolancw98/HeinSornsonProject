@@ -10,7 +10,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 /**
  *
  * @author nolancw98
@@ -23,6 +27,9 @@ public class ChatServer {
     
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+    
+    private static Queue<String> log = new LinkedList<String>();
+    private static FileRW files = new FileRW();
     
     public static void main(String[] args) throws Exception
     {
@@ -75,10 +82,20 @@ public class ChatServer {
                 }
                 out.println("NAMEACCEPTED");
                 writers.add(out);
-
+                
+                for(PrintWriter writer : writers)
+                {
+                    for(String s : log)
+                    {
+                        writer.println("MESSAGE " + name + ": " + s);
+                    }
+                }
                 while(true)
                 {
                     String input = in.readLine();
+                    log.add(input);
+                    //Where the server takes in chatted things
+                    System.out.println(input);
                     if(input == null)
                     {
                         return;

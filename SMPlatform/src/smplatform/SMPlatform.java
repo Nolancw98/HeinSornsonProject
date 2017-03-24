@@ -5,6 +5,7 @@
  */
 package smplatform;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -18,29 +19,23 @@ public class SMPlatform {
      */
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        System.out.println("Create an account");
-        System.out.println("USER: ");
-        String user = s.nextLine();
-        System.out.println("PASS: ");
-        String pass = s.nextLine();
-        
-        LoginReader l = new LoginReader();
-        l.getTable().put(user, pass);
-        
-        //l.write();
-        
-        //l.read();
-        System.out.println("Login: ");
-        String ckUser = s.nextLine();
-        String ckPass = s.nextLine();
-        
-        if(l.getTable().get(ckUser).equals(ckPass))
+        FileRW l = new FileRW();
+        ArrayList<String> ret = (ArrayList<String>) l.read("pass.txt");
+        while(ret.size() > 0)
         {
-            System.out.println("true");
+           System.out.println(ret.remove(0));
         }
-        else
-        {
-            System.out.println("false");
-        }
+//        System.out.println("Create an account");
+//        System.out.println("USER: ");
+//        String user = s.nextLine();
+//        System.out.println("PASS: ");
+//        String pass = s.nextLine();
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("hello");
+        words.add("hi");
+        
+        l.write(words.clone(), "pass.txt");
+        
+        
     }
 }
