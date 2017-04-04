@@ -62,7 +62,7 @@ public class ChatServerClient {
     }
     private String getName()
     {
-        return JOptionPane.showInputDialog(frame, "Choose a username:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Login:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
     }
     private void run() throws IOException
     {
@@ -77,6 +77,10 @@ public class ChatServerClient {
             if(line.startsWith("NEWUSER"))
             {
                 out.println(getReturning());
+            }
+            else if(line.startsWith("CREATEACCOUNT"))
+            {
+                out.println(getNewUser());
             }
             else if(line.startsWith("SUBMITNAME"))
             {
