@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ 172.30.17.41
  */
 package smplatform;
 import java.awt.event.ActionEvent;
@@ -42,6 +43,19 @@ public class ChatServerClient {
             }
         });
     }
+    
+    private Entry getNewUser()
+    {
+        String user = JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
+        String pass = JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
+        return new Entry(user, pass);
+    }
+    
+    private int getReturning()
+    {
+        return JOptionPane.showConfirmDialog(frame, "Are you a new user?", "Login/Register", JOptionPane.YES_NO_OPTION);
+    }
+    
     private String getServerAddress()
     {
         return JOptionPane.showInputDialog(frame, "Enter IP address of the Server:", "Welcome to the Chatter", JOptionPane.QUESTION_MESSAGE);
@@ -60,7 +74,11 @@ public class ChatServerClient {
         while(true)
         {
             String line = in.readLine();
-            if(line.startsWith("SUBMITNAME"))
+            if(line.startsWith("NEWUSER"))
+            {
+                out.println(getReturning());
+            }
+            else if(line.startsWith("SUBMITNAME"))
             {
                 out.println(getName());
             }
@@ -72,6 +90,7 @@ public class ChatServerClient {
             {
                 messageArea.append(line.substring(8) + "\n");
             }
+      
         }
     }
 
