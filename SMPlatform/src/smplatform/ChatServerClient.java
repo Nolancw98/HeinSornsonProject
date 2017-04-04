@@ -46,7 +46,9 @@ public class ChatServerClient {
     
     private Entry getNewUser()
     {
-        return JOption
+        String user = JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
+        String pass = JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
+        return new Entry(user, pass);
     }
     
     private int getReturning()
