@@ -34,8 +34,6 @@ public class SMPlatform {
         words.add("hello");
         words.add("hi");
         
-        l.write(words.clone(), "pass.txt");
-        
-        
+        l.write(words.clone(), "pass.txt");     
     }
 }
