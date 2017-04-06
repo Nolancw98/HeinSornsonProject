@@ -12,6 +12,9 @@ package smplatform;
 public class Entry {
     private String user;
     private String pass;
+    public Entry()
+    {
+    }
     public Entry(String user, String pass)
     {
         this.user = user;
@@ -24,5 +27,13 @@ public class Entry {
     public String getPass()
     {
         return pass;
+    }
+    public void setUser(String u)
+    {
+        user = u;
+    }
+    public void setPass(String p)
+    {
+        pass = p;
     }
 }

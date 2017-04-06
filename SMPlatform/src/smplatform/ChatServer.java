@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package smplatform;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,10 +24,8 @@ import java.util.Stack;
  */
 public class ChatServer {
     private static final int PORT = 9001;
-    //Does this work?
     //Unique names of clients
     private static HashSet<String> names = new HashSet<String>();
-    private static HashSet<String> passwords = new HashSet<String>();
     private static HashSet<Entry> logins = new HashSet<Entry>();
     
     //Set of print writers for all clients
@@ -55,13 +54,12 @@ public class ChatServer {
         }
     }
     private static class Handler extends Thread{
-        private Entry userpass;
+        private Entry login;
         private String name;
         private String pass;
         private int newUser;
         private Socket socket;
         private BufferedReader in;
-        private ObjectInputStream objin;
         private PrintWriter out;
         
         public Handler(Socket socket)
@@ -75,7 +73,6 @@ public class ChatServer {
             {
                 
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                //objin = new ObjectInputStream(socket.getInputStream());  BREAKS STUFF
                 out = new PrintWriter(socket.getOutputStream(), true);
                 while(true)
                 {
@@ -84,23 +81,30 @@ public class ChatServer {
                     System.out.println(newUser);
                     if(newUser == 48)
                     {
+                        login = new Entry();
                         out.println("CREATEACCOUNT");
-                        try{
-                            userpass = (Entry) objin.readObject();
-                        }
-                        catch(Exception e)
+                        name = in.readLine();
+                        synchronized(names)
                         {
+                            if(!names.contains(name))
+                            {
+                                System.err.println(name);
+                                break;
+                            }
                         }
+                        out.println("CREATEPASS");
+                        pass = in.readLine();
+                        System.err.println(pass);
                         
-                        if(userpass == null)
-                        {
-                            return;
-                        }
+                        
+                        System.err.println(login.getPass());
+                        System.err.println(login.getUser());
+                        
                         synchronized(logins)
                         {
                             //Check user pass combinations for conflicts
-                            if(!logins.contains(userpass)){
-                                logins.add(userpass);
+                            if(!logins.contains(login)){
+                                logins.add(login);
                                 break;
                             }
                         }
@@ -115,14 +119,14 @@ public class ChatServer {
                         }
                         if(names.contains(name))
                         {
-                            return;
+                            break;
                         }
                     }
                     
                 }
                 out.println("NAMEACCEPTED");
                 writers.add(out);
-                
+                /*
                 for(PrintWriter writer : writers)
                 {
                     for(String s : log)
@@ -130,13 +134,15 @@ public class ChatServer {
                         writer.println("MESSAGE " + name + ": " + s);
                     }
                 }
+                */
+                in.readLine();
                 while(true)
                 {
                     String input = in.readLine();
                     log.add(input);
                     files.write(log, "log.txt");
                     //Where the server takes in chatted things
-                    System.out.println(input);
+                    System.err.println(input);
                     if(input == null)
                     {
                         return;
@@ -147,9 +153,9 @@ public class ChatServer {
                     }
                 }
             }
-            catch(IOException e)
+            catch(Exception e)
             {
-                System.out.println(e);
+                System.err.println(e);
             }
             finally
             {
