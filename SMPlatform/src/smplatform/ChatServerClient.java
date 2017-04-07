@@ -44,11 +44,14 @@ public class ChatServerClient {
         });
     }
     
-    private Entry getNewUser()
+    private String getNewUser()
     {
-        String user = JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
-        String pass = JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
-        return new Entry(user, pass);
+        return JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
+    }
+    
+    private String getNewPass()
+    {
+        return JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
     }
     
     private int getReturning()
@@ -62,7 +65,7 @@ public class ChatServerClient {
     }
     private String getName()
     {
-        return JOptionPane.showInputDialog(frame, "Choose a username:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Login:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
     }
     private void run() throws IOException
     {
@@ -78,6 +81,14 @@ public class ChatServerClient {
             {
                 out.println(getReturning());
             }
+            else if(line.startsWith("CREATEACCOUNT"))
+            {
+                out.println(getNewUser());
+            }
+            else if(line.startsWith("CREATEPASS"))
+            {
+                out.println(getNewPass());
+            }
             else if(line.startsWith("SUBMITNAME"))
             {
                 out.println(getName());
@@ -88,9 +99,8 @@ public class ChatServerClient {
             }
             else if(line.startsWith("MESSAGE"))
             {
-                messageArea.append(line.substring(8) + "\n");
+                messageArea.append(line.substring(0) + "\n");
             }
-      
         }
     }
 
