@@ -96,13 +96,12 @@ public class ChatServer {
             //Debugging Variables
             names.add("admin");
             logins.add(new Entry("admin", "admin"));
-            System.err.println(log);
-            System.err.println(names);
-            System.err.println(logins);
+            System.out.println(log);
+            System.out.println(names);
+            System.out.println(logins);
             
             login = new Entry();
             int step = 0; //Case Number
-            String output = ""; //The string outputted to the client
 
             try {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -110,7 +109,7 @@ public class ChatServer {
                 while (true) {
                     out.println(state(step));
                     if (step == 0) {
-                        System.err.println(output);
+                        System.out.println(state(step));
                         int newUser = 0;
                         newUser = in.read();
                         System.out.println("FUCK:" + newUser);
@@ -121,37 +120,34 @@ public class ChatServer {
                         } else {
                             step = 0;
                         }
-                    } 
+                        
+                    }
                     else if (step == 1) {
-                        System.err.println(output);
+                        System.out.println(state(step));
                         String user = in.readLine();
-                        synchronized (names) {
-                            if (!names.contains(user)) {
-                                names.add(user);
-                                login.setUser(user);
-                                System.err.println(user);
-                                name = user;
-                                step = 2;
-                            } else {
-                                step = 1;
-                            }
+                        name = user;
+                        if (!user.equals("") && !names.contains(user)) {
+                            names.add(user);
+                            login.setUser(name);
+                            System.out.println("NAME: " + name);
+                            step = 2;
+                        } else {
+                            step = 1;
                         }
                     } 
                     else if (step == 2) {
-                        System.err.println(output);
+                        System.out.println(state(step));
                         String pass = in.readLine();
-                        login.setPass(pass);
-                        System.err.println(pass);
-                        synchronized (logins) {
-                            if (!logins.contains(login)) {
-                                step = 4;
-                            } else {
-                                step = 0;
-                            }
+                        if (!pass.equals("") && !logins.contains(login)) {
+                            login.setPass(pass);
+                            System.out.println("PASS: " + pass);
+                            step = 4;
+                        } else {
+                            step = 0;
                         }
                     } 
                     else if (step == 3) {
-                        System.err.println(output);
+                        System.out.println(state(step));
                         String user = in.readLine();
                         if (names.contains(user)) {
                             step = 4;
@@ -160,14 +156,14 @@ public class ChatServer {
                         }
                     } 
                     else if (step == 4) {
-                        System.err.println(output);
+                        System.out.println(state(step));
                         writers.add(out);
                         while (true) {
                             String input = in.readLine();
                             log.add(input);
                             files.write(log, "log.txt");
                             //Where the server takes in chatted things
-                            System.err.println(input);
+                            System.out.println(input);
                             if (input == null) {
                                 return;
                             }
