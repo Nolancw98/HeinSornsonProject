@@ -127,6 +127,7 @@ public class ChatServer {
                         String user = in.readLine();
                         synchronized (names) {
                             if (!names.contains(user)) {
+                                names.add(user);
                                 login.setUser(user);
                                 System.err.println(user);
                                 name = user;
@@ -177,107 +178,7 @@ public class ChatServer {
                     }
                 }
             } catch (Exception e) {
-            } /*
-            try
-            {
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-                while(true)
-                {
-                    out.println("NEWUSER");
-                    newUser = in.read();
-                    System.out.println(newUser);
-                    if(newUser == 48)
-                    {
-                        //login = new Entry();
-                        out.println("CREATEACCOUNT");
-                        name = in.readLine();
-                        synchronized(names)
-                        {
-                            if(!names.contains(name))
-                            {
-                                nameTaken = false;
-                                login.setUser(name);
-                                System.err.println(name);
-                            }
-                        }
-                        if(!nameTaken)
-                        {
-                            out.println("CREATEPASS");
-                            pass = in.readLine();
-                            login.setPass(pass);
-                            System.err.println(pass);
-                        }
-                        else
-                        {
-                            out.println("CREATEACCOUNT");
-                        }
-                        
-                        
-                        System.err.println(login.getPass());
-                        System.err.println(login.getUser());
-                        
-                        synchronized(logins)
-                        {
-                            //Check user pass combinations for conflicts
-                            if(!logins.contains(login)){
-                                logins.add(login);
-                                break;
-                            }
-                        }
-                    }
-                    else if(newUser == 49)
-                    {
-                        out.println("SUBMITNAME");
-                        name = in.readLine();
-                        if(name == null)
-                        {
-                            return;
-                        }
-                        if(names.contains(name))
-                        {
-                            break;
-                        }
-                    }
-                    
-                }
-                out.println("NAMEACCEPTED");
-                writers.add(out);
-                /*
-                for(PrintWriter writer : writers)
-                {
-                    for(String s : log)
-                    {
-                        writer.println("MESSAGE " + name + ": " + s);
-                    }
-                }
-             */ /*
-                in.readLine();
-                while(true)
-                {
-                    String input = in.readLine();
-                    log.add(input);
-                    files.write(log, "log.txt");
-                    //Where the server takes in chatted things
-                    System.err.println(input);
-                    if(input == null)
-                    {
-                        return;
-                    }
-                    for(PrintWriter writer : writers)
-                    {
-                        writer.println("MESSAGE " + name + ": " + input);
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                System.err.println(e);
-            }
-             */ finally {
-                if (name != null) {
-                    names.remove(name);
-                }
+            } finally {
                 if (out != null) {
                     writers.remove(out);
                 }
