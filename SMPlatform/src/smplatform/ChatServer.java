@@ -125,7 +125,17 @@ public class ChatServer {
                     else if (step == 1) {
                         System.out.println(state(step));
                         String user = in.readLine();
-                        name = user;
+                        if(user.equals(""))
+                        {
+                            name = "AYOOOO";
+                            System.out.println("Set name to AYOOOO");
+                        }
+                        else
+                        {
+                            name = user;
+                            System.out.println("Set name to entered value");
+                        }
+                        
                         if (!user.equals("") && !names.contains(user)) {
                             names.add(user);
                             login.setUser(name);
