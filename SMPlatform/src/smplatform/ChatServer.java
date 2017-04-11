@@ -114,8 +114,10 @@ public class ChatServer {
                         newUser = in.read();
                         System.out.println("FUCK:" + newUser);
                         if (newUser == 48) {
+                            in.readLine();
                             step = 1;
                         } else if (newUser == 49) {
+                            in.readLine();
                             step = 3;
                         } else {
                             step = 0;
@@ -125,14 +127,14 @@ public class ChatServer {
                     else if (step == 1) {
                         System.out.println(state(step));
                         String user = in.readLine();
-                        name = user;
                         if (!user.equals("") && !names.contains(user)) {
                             names.add(user);
-                            login.setUser(name);
+                            name = user;
+                            login.setUser(user);
                             System.out.println("NAME: " + name);
                             step = 2;
                         } else {
-                            step = 1;
+                            //step = 1;
                         }
                     } 
                     else if (step == 2) {
@@ -142,6 +144,7 @@ public class ChatServer {
                             login.setPass(pass);
                             System.out.println("PASS: " + pass);
                             step = 4;
+                           
                         } else {
                             step = 0;
                         }
@@ -149,7 +152,8 @@ public class ChatServer {
                     else if (step == 3) {
                         System.out.println(state(step));
                         String user = in.readLine();
-                        if (names.contains(user)) {
+                        if (!user.equals("") && names.contains(user)) {
+                            name = user;
                             step = 4;
                         } else {
                             step = 0;
