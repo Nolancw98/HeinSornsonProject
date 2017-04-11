@@ -92,7 +92,7 @@ public class ChatServer {
         public void run() {
 
             Boolean nameTaken = true;
-
+            logins = (HashSet<Entry>) files.read("users.txt");
             //Debugging Variables
             names.add("admin");
             logins.add(new Entry("admin", "admin"));
@@ -143,6 +143,8 @@ public class ChatServer {
                         if (!pass.equals("") && !logins.contains(login)) {
                             login.setPass(pass);
                             System.out.println("PASS: " + pass);
+                            logins.add(login);
+                            files.write(logins, "users.txt");
                             step = 4;
                            
                         } else {
