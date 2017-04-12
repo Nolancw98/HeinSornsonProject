@@ -58,6 +58,10 @@ public class ChatServerClient {
     {
         return JOptionPane.showConfirmDialog(frame, "Are you a new user?", "Login/Register", JOptionPane.YES_NO_OPTION);
     }
+    private String getPass()
+    {
+        return JOptionPane.showInputDialog(frame, "Enter your Password", "Login", JOptionPane.PLAIN_MESSAGE);
+    }
     
     private String getServerAddress()
     {
@@ -67,6 +71,7 @@ public class ChatServerClient {
     {
         return JOptionPane.showInputDialog(frame, "Login:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
     }
+    
     private void run() throws IOException
     {
         String serverAddress = getServerAddress();
@@ -93,6 +98,10 @@ public class ChatServerClient {
             {
                 out.println(getName());
             }
+            else if(line.startsWith("SUBMITPASS"))
+            {
+                out.println(getPass());
+            }
             else if(line.startsWith("NAMEACCEPTED"))
             {
                 textField.setEditable(true);
@@ -102,6 +111,7 @@ public class ChatServerClient {
                 messageArea.append(line.substring(0) + "\n");
             }
         }
+            
     }
 
     public static void main(String[] args) throws Exception

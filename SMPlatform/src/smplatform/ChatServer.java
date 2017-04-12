@@ -88,6 +88,9 @@ public class ChatServer {
                 case 5:
                     output = "MESSAGE"; //Sent when messaging
                     break;
+                case 6:
+                    output = "SUBMITPASS";
+                    break;
             }
             return output;
         }
@@ -142,6 +145,7 @@ public class ChatServer {
             System.out.println(logins);
             
             login = new Entry();
+            Entry check = new Entry();
             int step = 0; //Case Number
 
             try {
@@ -203,24 +207,28 @@ public class ChatServer {
                         String user = in.readLine();
                         
                         if (!user.equals("")) {
-                            Entry check = new Entry(user, "password");
+                            check.setUser(user);
+                            System.out.println("Check: " + check.userToString());
                             for(int i = 0; i < logins.size(); i++)
                             {
-                                if(logins.get(i).toString().equals(check.toString()))
+                                if(logins.get(i).userToString().equals(check.userToString()))
                                 {
-                                    name = user; 
-                                    step = 4;
+                                    System.out.println("Logins.get(i): " + logins.get(i).userToString());
+                                    name = user;
+                                    step = 5;
+                                    break;
                                 }
                                 else
                                 {
-                                    System.out.println("Invalid Login");
+                                    System.out.println("Invalid User");
+                                    step = 0;
                                 }
                             //name = user;
                             //step = 4;
                             }
                         }
                         else {
-                        step = 0;
+                            step = 0;
                         }
                     } 
                     else if (step == 4) {
@@ -238,6 +246,34 @@ public class ChatServer {
                             for (PrintWriter writer : writers) {
                                 writer.println("MESSAGE " + name + ": " + input);
                             }
+                        }
+                    }
+                    else if(step == 5)
+                    {
+                        System.out.println(state(step));
+                        String pass = in.readLine();
+                        
+                        if (!pass.equals("")) {
+                            check.setPass(pass);
+                            for(int i = 0; i < logins.size(); i++)
+                            {
+                                if(logins.get(i).passToString().equals(check.passToString()))
+                                {
+                                    step = 4;
+                                    break;
+                                }
+                                else
+                                {
+                                    System.out.println("Invalid Login");
+                                    step = 3;
+                                }
+                            //name = user;
+                            //step = 4;
+                            }
+                        }
+                        else 
+                        {
+                            step = 3;
                         }
                     }
                 }
