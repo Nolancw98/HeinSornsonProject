@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package smplatform;
-
+import java.io.Serializable;
 /**
  *
  * @author nolancw98
  */
-public class Entry {
+public class Entry implements Serializable{
     private String user;
     private String pass;
     public Entry()
