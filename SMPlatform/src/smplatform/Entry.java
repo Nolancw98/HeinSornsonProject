@@ -4,25 +4,40 @@
  * and open the template in the editor.
  */
 package smplatform;
-
+import java.io.Serializable;
 /**
  *
  * @author nolancw98
  */
-public class Entry<U,P> {
-    private U user;
-    private P pass;
-    public Entry(U user, P pass)
+public class Entry implements Serializable{
+    private String user;
+    private String pass;
+    public Entry()
+    {
+    }
+    public Entry(String user, String pass)
     {
         this.user = user;
         this.pass = pass;
     }
-    public U getUser()
+    public String getUser()
     {
         return user;
     }
-    public P getPass()
+    public String getPass()
     {
         return pass;
+    }
+    public void setUser(String u)
+    {
+        user = u;
+    }
+    public void setPass(String p)
+    {
+        pass = p;
+    }
+    public String toString()
+    {
+        return getUser();
     }
 }

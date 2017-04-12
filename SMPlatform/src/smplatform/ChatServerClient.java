@@ -2,6 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ 172.30.17.41
  */
 package smplatform;
 import java.awt.event.ActionEvent;
@@ -42,13 +43,29 @@ public class ChatServerClient {
             }
         });
     }
+    
+    private String getNewUser()
+    {
+        return JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
+    }
+    
+    private String getNewPass()
+    {
+        return JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
+    }
+    
+    private int getReturning()
+    {
+        return JOptionPane.showConfirmDialog(frame, "Are you a new user?", "Login/Register", JOptionPane.YES_NO_OPTION);
+    }
+    
     private String getServerAddress()
     {
         return JOptionPane.showInputDialog(frame, "Enter IP address of the Server:", "Welcome to the Chatter", JOptionPane.QUESTION_MESSAGE);
     }
     private String getName()
     {
-        return JOptionPane.showInputDialog(frame, "Choose a username:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Login:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
     }
     private void run() throws IOException
     {
@@ -60,7 +77,19 @@ public class ChatServerClient {
         while(true)
         {
             String line = in.readLine();
-            if(line.startsWith("SUBMITNAME"))
+            if(line.startsWith("NEWUSER"))
+            {
+                out.println(getReturning());
+            }
+            else if(line.startsWith("CREATEACCOUNT"))
+            {
+                out.println(getNewUser());
+            }
+            else if(line.startsWith("CREATEPASS"))
+            {
+                out.println(getNewPass());
+            }
+            else if(line.startsWith("SUBMITNAME"))
             {
                 out.println(getName());
             }
@@ -70,7 +99,7 @@ public class ChatServerClient {
             }
             else if(line.startsWith("MESSAGE"))
             {
-                messageArea.append(line.substring(8) + "\n");
+                messageArea.append(line.substring(0) + "\n");
             }
         }
     }
