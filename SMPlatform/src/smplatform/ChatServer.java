@@ -91,14 +91,14 @@ public class ChatServer {
         }
 
         public void run() {
-            //try
-            //{
-            //    logins = (HashSet<Entry>) files.read("users.txt");
-            //}
-            //catch(Exception eof)
-            //{
-            //    logins = new HashSet<Entry>();
-            //}
+            try
+            {
+                logins = (HashSet<Entry>)files.read("users.txt");
+            }
+            catch(Exception eof)
+            {
+                
+            }
             
             //Debugging Variables
             names.add("admin");
@@ -167,9 +167,20 @@ public class ChatServer {
                     else if (step == 3) {
                         System.out.println(state(step));
                         String user = in.readLine();
-                        if (!user.equals("") && names.contains(user)) {
-                            name = user;
-                            step = 4;
+                        
+                        if (!user.equals("")) {
+                            Entry check = new Entry(user, "password");
+                            if(logins.contains(check))
+                            {
+                                name = user; 
+                                step = 4;
+                            }
+                            else
+                            {
+                                System.out.println("Invalid Login");
+                            }
+                            //name = user;
+                            //step = 4;
                         } else {
                             step = 0;
                         }

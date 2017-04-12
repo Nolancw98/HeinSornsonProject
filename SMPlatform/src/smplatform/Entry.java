@@ -36,4 +36,8 @@ public class Entry implements Serializable{
     {
         pass = p;
     }
+    public String toString()
+    {
+        return getUser();
+    }
 }
