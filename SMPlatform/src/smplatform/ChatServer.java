@@ -9,6 +9,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.EOFException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -30,7 +33,7 @@ public class ChatServer {
     private static final int PORT = 9001;
     //Unique names of clients
     private static HashSet<String> names = new HashSet<String>();
-    private static HashSet<Entry> logins = new HashSet<Entry>();;
+    private static ArrayList<Entry> logins = new ArrayList<Entry>();
 
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
@@ -48,11 +51,10 @@ public class ChatServer {
             }
         } finally {
             System.out.println("Test");
-            files.write(log, "log.txt");
+            //files.write(log, "log.txt");
             listener.close();
         }
     }
-
     private static class Handler extends Thread {
 
         private Entry login;
@@ -89,11 +91,43 @@ public class ChatServer {
             }
             return output;
         }
+        public void saveEntry(Entry ent) throws IOException
+        {
+            PrintWriter outFile = new PrintWriter(new FileWriter("entries.txt"));
+            
+            outFile.println(ent.getUser());
+            outFile.println(ent.getPass());
+            outFile.close();
+        }
+        public ArrayList<Entry> readEntry() throws IOException
+        {
+            String user;
+            String pass;
+            ArrayList<Entry> ret = new ArrayList<>();
+            try
+            {
+                FileReader fr = new FileReader("entries.txt");
+                Scanner entriesIn = new Scanner(fr);
+                while(entriesIn.hasNext())
+                {
+                    user = entriesIn.nextLine();
+                    pass = entriesIn.nextLine();
+                    Entry ent = new Entry(user, pass);
+                    System.out.println(ent);
+                    ret.add(ent);
+                }
+            }
+            catch(Exception e)
+            {
+                
+            }
+            return ret;
+        }
 
         public void run() {
             try
             {
-                logins = (HashSet<Entry>)files.read("users.txt");
+                logins = readEntry();
             }
             catch(Exception eof)
             {
@@ -152,7 +186,7 @@ public class ChatServer {
                             System.out.println("PASS: " + pass);
                             logins.add(login);
                             try{
-                                files.write(logins, "users.txt");
+                                saveEntry(login);
                             }
                             catch(Exception exserial)
                             {
@@ -170,19 +204,23 @@ public class ChatServer {
                         
                         if (!user.equals("")) {
                             Entry check = new Entry(user, "password");
-                            if(logins.contains(check))
+                            for(int i = 0; i < logins.size(); i++)
                             {
-                                name = user; 
-                                step = 4;
-                            }
-                            else
-                            {
-                                System.out.println("Invalid Login");
-                            }
+                                if(logins.get(i).toString().equals(check.toString()))
+                                {
+                                    name = user; 
+                                    step = 4;
+                                }
+                                else
+                                {
+                                    System.out.println("Invalid Login");
+                                }
                             //name = user;
                             //step = 4;
-                        } else {
-                            step = 0;
+                            }
+                        }
+                        else {
+                        step = 0;
                         }
                     } 
                     else if (step == 4) {
@@ -191,7 +229,7 @@ public class ChatServer {
                         while (true) {
                             String input = in.readLine();
                             log.add(input);
-                            files.write(log, "log.txt");
+                            //files.write(log, "log.txt");
                             //Where the server takes in chatted things
                             System.out.println(input);
                             if (input == null) {
