@@ -8,6 +8,7 @@ package smplatform;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.EOFException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -29,7 +30,7 @@ public class ChatServer {
     private static final int PORT = 9001;
     //Unique names of clients
     private static HashSet<String> names = new HashSet<String>();
-    private static HashSet<Entry> logins = new HashSet<Entry>();
+    private static HashSet<Entry> logins = new HashSet<Entry>();;
 
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
@@ -90,9 +91,15 @@ public class ChatServer {
         }
 
         public void run() {
-
-            Boolean nameTaken = true;
-            logins = (HashSet<Entry>) files.read("users.txt");
+            //try
+            //{
+            //    logins = (HashSet<Entry>) files.read("users.txt");
+            //}
+            //catch(Exception eof)
+            //{
+            //    logins = new HashSet<Entry>();
+            //}
+            
             //Debugging Variables
             names.add("admin");
             logins.add(new Entry("admin", "admin"));
@@ -144,7 +151,13 @@ public class ChatServer {
                             login.setPass(pass);
                             System.out.println("PASS: " + pass);
                             logins.add(login);
-                            files.write(logins, "users.txt");
+                            try{
+                                files.write(logins, "users.txt");
+                            }
+                            catch(Exception exserial)
+                            {
+                                
+                            }
                             step = 4;
                            
                         } else {
