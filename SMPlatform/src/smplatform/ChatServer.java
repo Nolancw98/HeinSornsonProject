@@ -88,15 +88,18 @@ public class ChatServer {
                 case 5:
                     output = "MESSAGE"; //Sent when messaging
                     break;
+                case 6:
+                    output = "SUBMITPASS";//Submit password
+                    break;
             }
             return output;
         }
         public void saveEntry(Entry ent) throws IOException
         {
-            PrintWriter outFile = new PrintWriter(new FileWriter("entries.txt"));
+            PrintWriter outFile = new PrintWriter(new FileWriter("entries.txt", true));
             
-            outFile.println(ent.getUser());
-            outFile.println(ent.getPass());
+            outFile.append(ent.getUser() + "\n");
+            outFile.append(ent.getPass()+ "\n");
             outFile.close();
         }
         public ArrayList<Entry> readEntry() throws IOException
@@ -123,11 +126,42 @@ public class ChatServer {
             }
             return ret;
         }
+        public void saveLog(String p) throws IOException
+        {
+            PrintWriter outFile = new PrintWriter(new FileWriter("log.txt", true));
+            //FileWriter outFile = new FileWriter("log.txt", true);
+            
+            outFile.append(p + "\n");
+            outFile.close();
+        }
+        
+        public Queue<String> readLog() throws IOException
+        {
+            String post;
+            Queue<String> ret = new LinkedList<String>();
+            try
+            {
+                FileReader fr = new FileReader("log.txt");
+                Scanner postsIn = new Scanner(fr);
+                while(postsIn.hasNext())
+                {
+                    post = postsIn.nextLine();
+                    System.out.println(post);
+                    ret.add(post);
+                }
+            }
+            catch(Exception e)
+            {
+                
+            }
+            return ret;
+        }
 
         public void run() {
             try
             {
                 logins = readEntry();
+                log = readLog();
             }
             catch(Exception eof)
             {
@@ -142,6 +176,7 @@ public class ChatServer {
             System.out.println(logins);
             
             login = new Entry();
+            Entry check = new Entry();
             int step = 0; //Case Number
 
             try {
@@ -203,13 +238,14 @@ public class ChatServer {
                         String user = in.readLine();
                         
                         if (!user.equals("")) {
-                            Entry check = new Entry(user, "password");
+                            check.setUser(user);
                             for(int i = 0; i < logins.size(); i++)
                             {
-                                if(logins.get(i).toString().equals(check.toString()))
+                                if(logins.get(i).getUser().equals(check.getUser()))
                                 {
                                     name = user; 
-                                    step = 4;
+                                    step = 6;
+                                    break;
                                 }
                                 else
                                 {
@@ -225,10 +261,13 @@ public class ChatServer {
                     } 
                     else if (step == 4) {
                         System.out.println(state(step));
+                        //System.out.println(readLog());
+                        
                         writers.add(out);
                         while (true) {
                             String input = in.readLine();
                             log.add(input);
+                            System.out.println(log);
                             //files.write(log, "log.txt");
                             //Where the server takes in chatted things
                             System.out.println(input);
@@ -236,8 +275,36 @@ public class ChatServer {
                                 return;
                             }
                             for (PrintWriter writer : writers) {
+                                
                                 writer.println("MESSAGE " + name + ": " + input);
+                                saveLog(input);
                             }
+                        }
+                    }
+                    else if(step == 6)
+                    {
+                        System.out.println(state(step));
+                        String pass = in.readLine();
+                        
+                        if(!pass.equals(""))
+                        {
+                            check.setPass(pass);
+                            for(int i = 0; i < logins.size(); i++)
+                            {
+                                if(logins.get(i).getPass().equals(check.getPass()))
+                                {
+                                    step = 4;
+                                    break;
+                                }
+                                else
+                                {
+                                    System.out.println("Invalid Pass");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            step = 3;
                         }
                     }
                 }
