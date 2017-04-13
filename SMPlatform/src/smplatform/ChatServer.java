@@ -167,14 +167,7 @@ public class ChatServer {
             {
                 
             }
-            
-            //Debugging Variables
-            names.add("admin");
-            logins.add(new Entry("admin", "admin"));
-            System.out.println(log);
-            System.out.println(names);
-            System.out.println(logins);
-            
+                  
             login = new Entry();
             Entry check = new Entry();
             int step = 0; //Case Number
@@ -264,10 +257,19 @@ public class ChatServer {
                         //System.out.println(readLog());
                         
                         writers.add(out);
+                        for (PrintWriter writer : writers) {
+                                
+                            for(int i = 0; i < log.size(); i++)
+                            {
+                                System.out.println("writers loop: " + log.peek());
+                                writer.println("MESSAGE: " + log.poll());
+                            }
+                                
+                            }
                         while (true) {
                             String input = in.readLine();
                             log.add(input);
-                            System.out.println(log);
+                            //System.out.println(log);
                             //files.write(log, "log.txt");
                             //Where the server takes in chatted things
                             System.out.println(input);
@@ -276,8 +278,9 @@ public class ChatServer {
                             }
                             for (PrintWriter writer : writers) {
                                 
-                                writer.println("MESSAGE " + name + ": " + input);
-                                saveLog(input);
+                                String posted = "DATE " + name + ": " + input;
+                                writer.println("MESSAGE: " + posted);
+                                saveLog(posted);
                             }
                         }
                     }

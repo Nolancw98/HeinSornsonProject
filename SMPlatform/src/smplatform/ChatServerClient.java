@@ -27,7 +27,7 @@ public class ChatServerClient {
     PrintWriter out;
     JFrame frame = new JFrame("Chatter");
     JTextField textField = new JTextField(40);
-    JTextArea messageArea = new JTextArea(8, 40);
+    JTextArea messageArea = new JTextArea(40, 40);
     
     public ChatServerClient(){
         textField.setEditable(false);
@@ -107,7 +107,7 @@ public class ChatServerClient {
             }
             else if(line.startsWith("MESSAGE"))
             {
-                messageArea.append(line.substring(0) + "\n");
+                messageArea.append(line.substring(8) + "\n");
             }
         }
     }
