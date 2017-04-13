@@ -88,6 +88,9 @@ public class ChatServer {
                 case 5:
                     output = "MESSAGE"; //Sent when messaging
                     break;
+                case 6:
+                    output = "SUBMITPASS";//Submit password
+                    break;
             }
             return output;
         }
@@ -95,8 +98,8 @@ public class ChatServer {
         {
             PrintWriter outFile = new PrintWriter(new FileWriter("entries.txt", true));
             
-            outFile.append(ent.getUser());
-            outFile.append(ent.getPass());
+            outFile.append(ent.getUser() + "\n");
+            outFile.append(ent.getPass()+ "\n");
             outFile.close();
         }
         public ArrayList<Entry> readEntry() throws IOException
@@ -173,6 +176,7 @@ public class ChatServer {
             System.out.println(logins);
             
             login = new Entry();
+            Entry check = new Entry();
             int step = 0; //Case Number
 
             try {
@@ -234,13 +238,14 @@ public class ChatServer {
                         String user = in.readLine();
                         
                         if (!user.equals("")) {
-                            Entry check = new Entry(user, "password");
+                            check.setUser(user);
                             for(int i = 0; i < logins.size(); i++)
                             {
-                                if(logins.get(i).toString().equals(check.toString()))
+                                if(logins.get(i).getUser().equals(check.getUser()))
                                 {
                                     name = user; 
-                                    step = 4;
+                                    step = 6;
+                                    break;
                                 }
                                 else
                                 {
@@ -274,6 +279,32 @@ public class ChatServer {
                                 writer.println("MESSAGE " + name + ": " + input);
                                 saveLog(input);
                             }
+                        }
+                    }
+                    else if(step == 6)
+                    {
+                        System.out.println(state(step));
+                        String pass = in.readLine();
+                        
+                        if(!pass.equals(""))
+                        {
+                            check.setPass(pass);
+                            for(int i = 0; i < logins.size(); i++)
+                            {
+                                if(logins.get(i).getPass().equals(check.getPass()))
+                                {
+                                    step = 4;
+                                    break;
+                                }
+                                else
+                                {
+                                    System.out.println("Invalid Pass");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            step = 3;
                         }
                     }
                 }

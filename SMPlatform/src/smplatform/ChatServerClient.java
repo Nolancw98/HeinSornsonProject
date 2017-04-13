@@ -65,7 +65,11 @@ public class ChatServerClient {
     }
     private String getName()
     {
-        return JOptionPane.showInputDialog(frame, "Login:", "Screen name selection", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Login:", "Enter your Username", JOptionPane.PLAIN_MESSAGE);
+    }
+    private String getPass()
+    {
+        return JOptionPane.showInputDialog(frame, "Password:", "Enter your Password", JOptionPane.PLAIN_MESSAGE);
     }
     private void run() throws IOException
     {
@@ -92,6 +96,10 @@ public class ChatServerClient {
             else if(line.startsWith("SUBMITNAME"))
             {
                 out.println(getName());
+            }
+            else if(line.startsWith("SUBMITPASS"))
+            {
+                out.println(getPass());
             }
             else if(line.startsWith("NAMEACCEPTED"))
             {
