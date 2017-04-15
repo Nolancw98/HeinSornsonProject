@@ -2,9 +2,11 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- 172.30.17.41
+Eddie School:172.30.17.41
+Eddie Joe's: 192.168.1.170
  */
 package smplatform;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -27,13 +29,15 @@ public class ChatServerClient {
     PrintWriter out;
     JFrame frame = new JFrame("Chatter");
     JTextField textField = new JTextField(40);
-    JTextArea messageArea = new JTextArea(40, 40);
+    JTextArea messageArea = new JTextArea(40, 60);
     
     public ChatServerClient(){
         textField.setEditable(false);
         messageArea.setEditable(false);
         frame.getContentPane().add(textField,"North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
+        //frame.setResizable(false);
+        messageArea.setBackground(Color.GRAY);
         frame.pack();
         
         textField.addActionListener(new ActionListener(){

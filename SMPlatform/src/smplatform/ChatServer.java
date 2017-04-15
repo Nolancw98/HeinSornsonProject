@@ -18,6 +18,7 @@ import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -37,10 +38,12 @@ public class ChatServer {
 
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
-
     private static Queue<String> log = new LinkedList<String>();
     private static FileRW files = new FileRW();
-
+    
+    // Instantiate a Date object
+    private static Date date = new Date();
+     
     public static void main(String[] args) throws Exception {
         //log = (Queue<String>) files.read("log.txt");
         System.out.println("The chat server is running.");
@@ -278,9 +281,10 @@ public class ChatServer {
                             }
                             for (PrintWriter writer : writers) {
                                 
-                                String posted = "DATE " + name + ": " + input;
-                                writer.println("MESSAGE: " + posted);
-                                saveLog(posted);
+                                LogPost post = new LogPost(name, input, date.toString());
+                                
+                                writer.println("MESSAGE: " + post.toString());
+                                saveLog(post.toString());
                             }
                         }
                     }
