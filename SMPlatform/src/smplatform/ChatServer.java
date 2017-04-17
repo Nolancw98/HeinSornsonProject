@@ -165,6 +165,7 @@ public class ChatServer {
             {
                 logins = readEntry();
                 log = readLog();
+                System.out.println(log);
             }
             catch(Exception eof)
             {
@@ -184,7 +185,7 @@ public class ChatServer {
                         System.out.println(state(step));
                         int newUser = 0;
                         newUser = in.read();
-                        System.out.println("FUCK:" + newUser);
+                        //System.out.println(newUser);
                         if (newUser == 48) {
                             in.readLine();
                             step = 1;
@@ -212,18 +213,33 @@ public class ChatServer {
                     else if (step == 2) {
                         System.out.println(state(step));
                         String pass = in.readLine();
-                        if (!pass.equals("") && !logins.contains(login)) {
+                        if (!pass.equals("")) {
+                            boolean valid = true;
                             login.setPass(pass);
-                            System.out.println("PASS: " + pass);
-                            logins.add(login);
-                            try{
-                                saveEntry(login);
-                            }
-                            catch(Exception exserial)
+                            for(int i = 0; i < logins.size(); i++)
                             {
-                                
+                                if(logins.get(i).toString().equals(login))
+                                {
+                                    valid = false;
+                                }
                             }
-                            step = 4;
+                            if(valid)
+                            {
+                                System.out.println("PASS: " + pass);
+                                logins.add(login);
+                                try{
+                                    saveEntry(login);
+                                }
+                                catch(Exception exserial)
+                                {
+
+                                }
+                                step = 4;
+                            }
+                            else
+                            {
+                                step = 0;
+                            }
                            
                         } else {
                             step = 0;
@@ -262,15 +278,22 @@ public class ChatServer {
                         writers.add(out);
                         for (PrintWriter writer : writers) {
                                 
-                            for(int i = 0; i < log.size(); i++)
+                            while(!log.isEmpty())
                             {
                                 System.out.println("writers loop: " + log.peek());
-                                writer.println("MESSAGE: " + log.poll());
+                                writer.println("MESSAGE: " + log.peek());
+                                log.remove();
+                                        
                             }
                                 
                             }
                         while (true) {
                             String input = in.readLine();
+                            
+                            if(input.startsWith("TITLE"))
+                            {
+                                input += in.readLine();
+                            }
                             log.add(input);
                             //System.out.println(log);
                             //files.write(log, "log.txt");

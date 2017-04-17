@@ -6,6 +6,7 @@ Eddie School:172.30.17.41
 Eddie Joe's: 192.168.1.170
  */
 package smplatform;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +15,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.JButton;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -30,20 +33,65 @@ public class ChatServerClient {
     JFrame frame = new JFrame("Chatter");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(40, 60);
+    JButton makePost = new JButton("Post");
+    JPanel subPanel = new JPanel();
+    
+    JFrame post = new JFrame("Post");
+    JTextField title = new JTextField(40);
+    JTextArea body = new JTextArea(30, 40);
+    JButton send = new JButton("Send");
+    
     
     public ChatServerClient(){
+        makePost.setEnabled(false);
         textField.setEditable(false);
         messageArea.setEditable(false);
-        frame.getContentPane().add(textField,"North");
+        messageArea.setWrapStyleWord(false);
+        frame.setLayout(new BorderLayout());
+        
+        subPanel.add(makePost, "North");
+        subPanel.add(textField,"South");
+        
+        frame.add(subPanel, "North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
-        //frame.setResizable(false);
-        messageArea.setBackground(Color.GRAY);
+        frame.setResizable(false);
+        messageArea.setBackground(Color.WHITE);
         frame.pack();
+        
+        body.setEditable(false);
+        title.setEditable(false);
+        title.setText("");
+        body.setText("");
+        post.getContentPane().add(title, "North");
+        post.getContentPane().add(body, "Center");
+        post.getContentPane().add(send, "South");
+        post.setVisible(false);
+        post.pack();
+        body.setWrapStyleWord(true);
         
         textField.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 out.println(textField.getText());
                 textField.setText("");
+            }
+        });
+        makePost.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent but)
+            {
+                post.setVisible(true);
+                title.setEditable(true);
+                body.setEditable(true);
+                
+            }
+        });
+        send.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent se)
+            {
+                out.println("TITLE: " + title.getText());
+                out.println("\nBODY: " + body.getText());
+                title.setText("Title");
+                body.setText("Body");
+                post.setVisible(false);
             }
         });
     }
@@ -108,6 +156,7 @@ public class ChatServerClient {
             else if(line.startsWith("NAMEACCEPTED"))
             {
                 textField.setEditable(true);
+                makePost.setEnabled(true);
             }
             else if(line.startsWith("MESSAGE"))
             {

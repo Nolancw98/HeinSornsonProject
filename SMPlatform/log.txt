@@ -1,2 +1,6 @@
 Thu Apr 13 18:03:32 CDT 2017, Wardo: What a crazy day, I went to the bathroom at Denny's and saw #AdamSandler!
-Thu Apr 13 18:09:59 CDT 2017, Nolan: Today wasn't so great for me :'(
+Thu Apr 13 18:09:59 CDT 2017, Nolan: Today wasn't so great for me :'(|Sun Apr 16 21:27:20 CDT 2017|Nolan: Test|
+|Sun Apr 16 21:27:20 CDT 2017|Nolan: TITLE: TestpostBODY: Testpost|
+|Sun Apr 16 21:27:20 CDT 2017|Nolan: |
+|Sun Apr 16 21:27:20 CDT 2017|Nolan: TITLE: t|
+|Sun Apr 16 21:27:20 CDT 2017|Nolan: BODY: t|
