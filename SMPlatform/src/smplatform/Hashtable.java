@@ -11,6 +11,15 @@ package smplatform;
  * @author nolancw98
  */
 public class Hashtable<U,P> {
+    
+    /**
+     * This class is obsolete.  
+     */
+    
+    
+    
+    
+    
     private final static int TABLE_SIZE = 8;
     //private Entry<U,P> [] table;
     public Hashtable()

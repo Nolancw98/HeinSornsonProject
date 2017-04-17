@@ -15,6 +15,13 @@ import java.util.Scanner;
 public class SMPlatform {
 
     /**
+     * This the default main method for netbeans.  This only was used for
+     * Testing purposes
+     */
+    
+    
+    
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {

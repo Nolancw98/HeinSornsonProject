@@ -19,6 +19,13 @@ import java.util.logging.Logger;
  * @author nolancw98
  */
 public class FileRW{
+    
+    /**
+     * This class is obsolete, a better solution was found.  
+     */
+    
+    
+    
     public FileRW()
     {
     }
