@@ -350,10 +350,12 @@ public class ChatServer {
                         while (true) {
                             String input = in.readLine();
                             
-                            if(input.startsWith("TITLE"))
-                            {
-                                input += in.readLine();
-                            }
+                            //if(input.startsWith(""))
+                            
+                            //if(input.startsWith("TITLE"))
+                            //{
+                                //input += in.readLine();
+                            //}
                             log.add(input);
                             //Where the server takes in chatted things
                             System.out.println(input);
@@ -364,8 +366,20 @@ public class ChatServer {
                                 
                                 LogPost post = new LogPost(name, input, date.toString());
                                 
-                                writer.println("MESSAGE: " + post.toString());
-                                saveLog(post.toString());
+                                if(input.contains("BODY") || input.contains("----"))
+                                {
+                                    if(input.contains("BODY"))
+                                    {
+                                        input = input.substring(4);
+                                    }
+                                    writer.println("MESSAGE: " + post.bodyToString());
+                                    saveLog(post.bodyToString());
+                                }
+                                else
+                                {
+                                    writer.println("MESSAGE: " + post.toString());
+                                    saveLog(post.toString());
+                                }
                             }
                         }
                     }
