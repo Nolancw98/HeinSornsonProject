@@ -100,8 +100,10 @@ public class ChatServerClient {
         send.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent se)
             {
-                out.println("TITLE: " + title.getText());
-                out.println("\nBODY: " + body.getText());
+                out.println("---------------------\n" + title.getText() + "\nBODY: " + body.getText() + "\n---------------------");
+                //out.println("TITLE: " + title.getText());
+                //out.println("\nBODY: " + body.getText());
+                //out.println("---------------------");
                 title.setText("Title");
                 body.setText("Body");
                 post.setVisible(false);

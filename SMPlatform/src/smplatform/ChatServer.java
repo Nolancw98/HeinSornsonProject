@@ -364,13 +364,14 @@ public class ChatServer {
                             }
                             for (PrintWriter writer : writers) {
                                 
-                                LogPost post = new LogPost(name, input, date.toString());
+                                LogPost post = new LogPost(name, input, date.toString());;
                                 
                                 if(input.contains("BODY") || input.contains("----"))
                                 {
                                     if(input.contains("BODY"))
                                     {
                                         input = input.substring(4);
+                                        post = new LogPost(name, input, date.toString());
                                     }
                                     writer.println("MESSAGE: " + post.bodyToString());
                                     saveLog(post.bodyToString());

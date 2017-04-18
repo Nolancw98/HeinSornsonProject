@@ -1,12 +1,17 @@
-Thu Apr 13 18:03:32 CDT 2017, Wardo: What a crazy day, I went to the bathroom at Denny's and saw #AdamSandler!
-Thu Apr 13 18:09:59 CDT 2017, Nolan: Today wasn't so great for me :'(|Sun Apr 16 21:27:20 CDT 2017|Nolan: Test|
-|Sun Apr 16 21:27:20 CDT 2017|Nolan: TITLE: TestpostBODY: Testpost|
-|Sun Apr 16 21:27:20 CDT 2017|Nolan: |
-|Sun Apr 16 21:27:20 CDT 2017|Nolan: TITLE: t|
-|Sun Apr 16 21:27:20 CDT 2017|Nolan: BODY: t|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: Hiya|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: Why|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: fuck|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: test|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: TITLE: test|
-|Sun Apr 16 21:36:59 CDT 2017|Nolan: BODY: test|
+
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: ---------------------|
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: TITLE: Eddie's First Post|
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: BODY: Wow this app is so freakin cool.|
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: ---------------------|
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: hello does this show up|
+|Mon Apr 17 14:25:35 CDT 2017|Wardo: hello does this show up|
+|Mon Apr 17 14:25:35 CDT 2017|nainai123: test|
+|Mon Apr 17 14:25:35 CDT 2017|nainai123: test|
+|---------------------|
+|Mon Apr 17 14:33:52 CDT 2017|Wardo: TITLE: Title Test|
+|BODY: This is the body|
+|---------------------|
+|---------------------|
+|Mon Apr 17 14:35:58 CDT 2017|Wardo: Title |
+|BODY: This is the bodu|
+|---------------------|

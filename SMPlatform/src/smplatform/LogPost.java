@@ -40,4 +40,10 @@ public class LogPost
         String ret = "|" + getDate() + "|" + getName() + ": " + getContent() + "|";
         return ret;
     }
+    
+    public String bodyToString()
+    {
+        String ret = "|" + getContent() + "|";
+        return ret;
+    }
 }
