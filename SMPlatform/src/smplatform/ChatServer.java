@@ -303,6 +303,7 @@ public class ChatServer {
                                 if(logins.get(i).getUser().equals(check.getUser()))
                                 {
                                     name = user; 
+                                    names.add(name);
                                     step = 6;
                                     break;
                                 }
@@ -331,7 +332,7 @@ public class ChatServer {
                         /**
                          * This for loop prints posts from the log.  
                          */
-                        for(int i = 0; i < log.size(); i++){
+                        while(!log.isEmpty()){
                             for (PrintWriter writer : writers) {    
                                 System.out.println("writers loop: " + log.peek());
                                 writer.println("MESSAGE: " + log.peek());
@@ -360,7 +361,7 @@ public class ChatServer {
                             }
                             for (PrintWriter writer : writers) {
                                 
-                                LogPost post = new LogPost(name, input, date.toString());;
+                                LogPost post = new LogPost(name, input, date.toString());
                                 
                                 if(input.contains("BODY") || input.contains("----"))
                                 {
@@ -422,7 +423,7 @@ public class ChatServer {
             } catch (Exception e) {
             } finally {
                 if (out != null) {
-                    writers.remove(out);
+                    writers.clear();
                 }
                 try {
                     socket.close();
