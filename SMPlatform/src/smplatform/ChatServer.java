@@ -359,20 +359,19 @@ public class ChatServer {
                                 return;
                             }
                             LogPost toLog = new LogPost("","","");
+                            LogPost post = new LogPost(name, input, date.toString());
                             for (PrintWriter writer : writers) {
-                                
-                                LogPost post = new LogPost(name, input, date.toString());
-                                
                                 if(input.contains("BODY"))
                                 {
-                                    input = input.substring(6);
+                                    //input = input.substring(6);
                                     post = new LogPost(name, input, date.toString());
+                                    writer.println("MESSAGE: " + post.bodyToString());
                                     toLog = post;
                                     //saveLog(post.bodyToString());
                                 }
                                 else if(input.contains("TITLE"))
                                 {
-                                    input = input.substring(7);
+                                    //input = input.substring(7);
                                     post = new LogPost(name, input, date.toString());
                                     writer.println("MESSAGE: " + post.toString());
                                     toLog = post;
@@ -385,7 +384,20 @@ public class ChatServer {
                                     //saveLog(post.bodyToString());
                                 }
                             }
-                            saveLog(toLog.toString());
+                            String save = "";
+                            if(toLog.toString().contains("BODY"))
+                            {
+                                save = toLog.bodyToString().substring(6);
+                            }
+                            else if(toLog.toString().contains("TITLE"))
+                            {
+                                save = toLog.toString().substring(0, 37) + toLog.toString().substring(43);
+                            }
+                            else
+                            {
+                                save = toLog.bodyToString();
+                            }
+                            saveLog(save);
                         }
                     }
                     /**
@@ -422,8 +434,12 @@ public class ChatServer {
                 }
             } catch (Exception e) {
             } finally {
+                if(name != null)
+                {
+                    names.remove(name);
+                }
                 if (out != null) {
-                    writers.clear();
+                    writers.remove(out);
                 }
                 try {
                     socket.close();
