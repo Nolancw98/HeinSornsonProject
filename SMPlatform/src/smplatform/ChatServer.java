@@ -358,33 +358,34 @@ public class ChatServer {
                             if (input == null) {
                                 return;
                             }
+                            LogPost toLog = new LogPost("","","");
                             for (PrintWriter writer : writers) {
                                 
                                 LogPost post = new LogPost(name, input, date.toString());
                                 
-                                if(input.contains("BODY") || input.contains("----"))
+                                if(input.contains("BODY"))
                                 {
-                                    if(input.contains("BODY"))
-                                    {
-                                        input = input.substring(6);
-                                        post = new LogPost(name, input, date.toString());
-                                    }
-                                    writer.println("MESSAGE: " + post.bodyToString());
-                                    saveLog(post.bodyToString());
+                                    input = input.substring(6);
+                                    post = new LogPost(name, input, date.toString());
+                                    toLog = post;
+                                    //saveLog(post.bodyToString());
                                 }
                                 else if(input.contains("TITLE"))
                                 {
                                     input = input.substring(7);
                                     post = new LogPost(name, input, date.toString());
                                     writer.println("MESSAGE: " + post.toString());
-                                    saveLog(post.toString());
+                                    toLog = post;
+                                    //saveLog(post.toString());
                                 }
                                 else
                                 {
                                     writer.println("MESSAGE: " + post.bodyToString());
-                                    saveLog(post.bodyToString());
+                                    toLog = post;
+                                    //saveLog(post.bodyToString());
                                 }
                             }
+                            saveLog(toLog.toString());
                         }
                     }
                     /**
