@@ -52,7 +52,7 @@ public class ChatServerClient {
         frame.setLayout(new BorderLayout());
         
         subPanel.add(makePost, "North");
-        subPanel.add(textField,"South");
+        //subPanel.add(textField,"South");
         
         frame.add(subPanel, "North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
@@ -100,7 +100,7 @@ public class ChatServerClient {
         send.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent se)
             {
-                out.println("---------------------\n" + title.getText() + "\nBODY: " + body.getText() + "\n---------------------");
+                out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" + "TITLE: " + title.getText() + "\nBODY: " + body.getText() + "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 //out.println("TITLE: " + title.getText());
                 //out.println("\nBODY: " + body.getText());
                 //out.println("---------------------");

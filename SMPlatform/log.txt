@@ -1,17 +1,7 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Mon Apr 17 20:46:38 CDT 2017 Nolan: Welcome!
+Welcome to Eddie and Nolan's Social Media Platform.
+Please press post above to get started!
 
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: ---------------------|
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: TITLE: Eddie's First Post|
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: BODY: Wow this app is so freakin cool.|
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: ---------------------|
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: hello does this show up|
-|Mon Apr 17 14:25:35 CDT 2017|Wardo: hello does this show up|
-|Mon Apr 17 14:25:35 CDT 2017|nainai123: test|
-|Mon Apr 17 14:25:35 CDT 2017|nainai123: test|
-|---------------------|
-|Mon Apr 17 14:33:52 CDT 2017|Wardo: TITLE: Title Test|
-|BODY: This is the body|
-|---------------------|
-|---------------------|
-|Mon Apr 17 14:35:58 CDT 2017|Wardo: Title |
-|BODY: This is the bodu|
-|---------------------|
+--Nolan
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------

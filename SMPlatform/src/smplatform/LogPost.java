@@ -37,13 +37,13 @@ public class LogPost
     
     public String toString()
     {
-        String ret = "|" + getDate() + "|" + getName() + ": " + getContent() + "|";
+        String ret = "" + getDate() + " " + getName() + ": " + getContent() + "";
         return ret;
     }
     
     public String bodyToString()
     {
-        String ret = "|" + getContent() + "|";
+        String ret = "" + getContent() + "";
         return ret;
     }
 }

@@ -370,16 +370,23 @@ public class ChatServer {
                                 {
                                     if(input.contains("BODY"))
                                     {
-                                        input = input.substring(4);
+                                        input = input.substring(6);
                                         post = new LogPost(name, input, date.toString());
                                     }
                                     writer.println("MESSAGE: " + post.bodyToString());
                                     saveLog(post.bodyToString());
                                 }
-                                else
+                                else if(input.contains("TITLE"))
                                 {
+                                    input = input.substring(7);
+                                    post = new LogPost(name, input, date.toString());
                                     writer.println("MESSAGE: " + post.toString());
                                     saveLog(post.toString());
+                                }
+                                else
+                                {
+                                    writer.println("MESSAGE: " + post.bodyToString());
+                                    saveLog(post.bodyToString());
                                 }
                             }
                         }
