@@ -62,8 +62,8 @@ public class ChatServerClient {
         
         body.setEditable(false);
         title.setEditable(false);
-        title.setText("");
-        body.setText("");
+        title.setText("Title");
+        body.setText("Body");
         post.getContentPane().add(title, "North");
         post.getContentPane().add(body, "Center");
         post.getContentPane().add(send, "South");

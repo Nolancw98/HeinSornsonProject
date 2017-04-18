@@ -331,16 +331,12 @@ public class ChatServer {
                         /**
                          * This for loop prints posts from the log.  
                          */
-                        for (PrintWriter writer : writers) {
-                                
-                            while(!log.isEmpty())
-                            {
+                        for(int i = 0; i < log.size(); i++){
+                            for (PrintWriter writer : writers) {    
                                 System.out.println("writers loop: " + log.peek());
                                 writer.println("MESSAGE: " + log.peek());
-                                log.remove();
-                                        
                             }
-                                
+                            log.remove();
                         }
                         
                         /**
