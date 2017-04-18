@@ -100,7 +100,15 @@ public class ChatServerClient {
         send.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent se)
             {
-                out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" + "TITLE: " + title.getText() + "\nBODY: " + body.getText() + "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                out.println("--------------------------------------------------"
+                        + "--------------------------------------"
+                        + "-------------------------------------------"
+                        + "-----------------------"
+                        + "----------\n" + "TITLE: " + title.getText() 
+                        + "\nBODY: " + body.getText() + "\n--------------------"
+                        + "----------------------------------------------------"
+                        + "--------------------------------------------"
+                        + "------------------------------------------------");
                 //out.println("TITLE: " + title.getText());
                 //out.println("\nBODY: " + body.getText());
                 //out.println("---------------------");
@@ -117,7 +125,8 @@ public class ChatServerClient {
      */
     private String getNewUser()
     {
-        return JOptionPane.showInputDialog(frame, "Enter your desired Username", "Register", JOptionPane.QUESTION_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Enter your desired Username", 
+                "Register", JOptionPane.QUESTION_MESSAGE);
     }
     /**
      * Prompts the user with a JOptionPane for their new Password
@@ -125,7 +134,8 @@ public class ChatServerClient {
      */
     private String getNewPass()
     {
-        return JOptionPane.showInputDialog(frame, "Enter your Password", "Register", JOptionPane.QUESTION_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Enter your Password", 
+                "Register", JOptionPane.QUESTION_MESSAGE);
     }
     
     /**
@@ -135,7 +145,8 @@ public class ChatServerClient {
      */
     private int getReturning()
     {
-        return JOptionPane.showConfirmDialog(frame, "Are you a new user?", "Login/Register", JOptionPane.YES_NO_OPTION);
+        return JOptionPane.showConfirmDialog(frame, "Are you a new user?", 
+                "Login/Register", JOptionPane.YES_NO_OPTION);
     }
     /**
      * Prompts the user with a JOptionPane to enter an IP.  Will be
@@ -144,7 +155,9 @@ public class ChatServerClient {
      */
     private String getServerAddress()
     {
-        return JOptionPane.showInputDialog(frame, "Enter IP address of the Server:", "Welcome to the Chatter", JOptionPane.QUESTION_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Enter IP address of the "
+                + "Server:", "Welcome to the Chatter", 
+                JOptionPane.QUESTION_MESSAGE);
     }
     
     /**
@@ -153,7 +166,8 @@ public class ChatServerClient {
      */
     private String getName()
     {
-        return JOptionPane.showInputDialog(frame, "Login:", "Enter your Username", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Login:", "Enter your "
+                + "Username", JOptionPane.PLAIN_MESSAGE);
     }
     /**
      * Prompts the user to enter their password to verify
@@ -161,7 +175,8 @@ public class ChatServerClient {
      */
     private String getPass()
     {
-        return JOptionPane.showInputDialog(frame, "Password:", "Enter your Password", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Password:", "Enter your "
+                + "Password", JOptionPane.PLAIN_MESSAGE);
     }
     /**
      * Handles the server messages and communicates info back to the server

@@ -229,7 +229,6 @@ public class ChatServer {
                         } else {
                             step = 0;
                         }
-                        
                     }
                     /**
                      * This prompts the user for their user name to create
