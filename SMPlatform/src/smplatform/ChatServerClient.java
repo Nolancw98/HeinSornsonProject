@@ -15,14 +15,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import javax.swing.JButton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Serves as the client's access to the server.  Will be packaged as .jar
  * @author nolancw98
@@ -30,7 +35,7 @@ import javax.swing.JTextField;
 public class ChatServerClient {
     BufferedReader in;
     PrintWriter out;
-    JFrame frame = new JFrame("Socketbook");
+    JFrame frame = new JFrame("Sockit");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(40, 60);
     JButton makePost = new JButton("Post");
@@ -51,13 +56,25 @@ public class ChatServerClient {
         //messageArea.setWrapStyleWord(true);
         frame.setLayout(new BorderLayout());
         
+        
+        subPanel.setBackground(new Color(102, 178, 255));
         subPanel.add(makePost, "North");
         //subPanel.add(textField,"South");
-        
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ChatServerClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ChatServerClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ChatServerClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(ChatServerClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
         frame.add(subPanel, "North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
         frame.setResizable(false);
-        messageArea.setBackground(Color.WHITE);
+        messageArea.setBackground(new Color(224,224,224));
         frame.pack();
         
         body.setEditable(false);
@@ -156,8 +173,14 @@ public class ChatServerClient {
     private String getServerAddress()
     {
         return JOptionPane.showInputDialog(frame, "Enter IP address of the "
-                + "Server:", "Welcome to the Chatter", 
+                + "Server:", "Welcome to Sockit", 
                 JOptionPane.QUESTION_MESSAGE);
+    }
+    private int getPort()
+    {
+        return Integer.parseInt(JOptionPane.showInputDialog(frame, "Enter Port of the "
+                + "Server:", "Welcome to Sockit", 
+                JOptionPane.QUESTION_MESSAGE));
     }
     
     /**
@@ -185,7 +208,7 @@ public class ChatServerClient {
     private void run() throws IOException
     {
         String serverAddress = getServerAddress();
-        Socket socket = new Socket(serverAddress, 9001);
+        Socket socket = new Socket(serverAddress, getPort());
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
         
