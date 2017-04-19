@@ -56,6 +56,8 @@ public class ChatServerClient {
         //messageArea.setWrapStyleWord(true);
         frame.setLayout(new BorderLayout());
         
+        
+        subPanel.setBackground(new Color(102, 178, 255));
         subPanel.add(makePost, "North");
         //subPanel.add(textField,"South");
         try {
@@ -72,7 +74,7 @@ public class ChatServerClient {
         frame.add(subPanel, "North");
         frame.getContentPane().add(new JScrollPane(messageArea), "Center");
         frame.setResizable(false);
-        messageArea.setBackground(Color.WHITE);
+        messageArea.setBackground(new Color(224,224,224));
         frame.pack();
         
         body.setEditable(false);
