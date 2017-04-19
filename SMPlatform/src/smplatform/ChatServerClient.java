@@ -30,7 +30,7 @@ import javax.swing.JTextField;
 public class ChatServerClient {
     BufferedReader in;
     PrintWriter out;
-    JFrame frame = new JFrame("Chatter");
+    JFrame frame = new JFrame("Java Book");
     JTextField textField = new JTextField(40);
     JTextArea messageArea = new JTextArea(40, 60);
     JButton makePost = new JButton("Post");

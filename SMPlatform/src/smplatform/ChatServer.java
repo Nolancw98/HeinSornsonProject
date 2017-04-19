@@ -1,4 +1,5 @@
 /*
+   192.168.1.82
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -325,19 +326,23 @@ public class ChatServer {
                      */
                     else if (step == 4) {
                         System.out.println(state(step));
+                        HashSet<PrintWriter> temp = (HashSet<PrintWriter>) writers.clone();
                         //System.out.println(readLog());
-                        
+                        writers.clear();
                         writers.add(out);
+                        temp.add(out);
                         /**
                          * This for loop prints posts from the log.  
                          */
                         while(!log.isEmpty()){
-                            for (PrintWriter writer : writers) {    
-                                System.out.println("writers loop: " + log.peek());
-                                writer.println("MESSAGE: " + log.peek());
+                            for (PrintWriter writer : writers) 
+                            {   
+                                    System.out.println("writers loop: " + log.peek());
+                                    writer.println("MESSAGE: " + log.peek());
                             }
                             log.remove();
                         }
+                        writers = temp;
                         
                         /**
                          * This while loop allows users to send messages to 
