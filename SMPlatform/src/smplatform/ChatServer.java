@@ -5,24 +5,20 @@
  */
 package smplatform;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.EOFException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  *
@@ -37,10 +33,11 @@ public class ChatServer {
 
     //Set of print writers for all clients
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
-
     private static Queue<String> log = new LinkedList<String>();
-    private static FileRW files = new FileRW();
-
+    
+    // Instantiate a Date object
+    private static Date date;
+     
     public static void main(String[] args) throws Exception {
         //log = (Queue<String>) files.read("log.txt");
         System.out.println("The chat server is running.");
@@ -67,6 +64,12 @@ public class ChatServer {
             this.socket = socket;
         }
 
+        /**
+         * Determines the case that needs to be outputted to the client.
+         * This format allows stepping forward and backward
+         * @param step the case number
+         * @return the String to be outputted to the client
+         */
         public String state(int step) {
             String output = "";
             switch (step) {
@@ -94,6 +97,11 @@ public class ChatServer {
             }
             return output;
         }
+        /**
+         * Saves and Entry(consisting of a user and password) to file
+         * @param ent
+         * @throws IOException 
+         */
         public void saveEntry(Entry ent) throws IOException
         {
             PrintWriter outFile = new PrintWriter(new FileWriter("entries.txt", true));
@@ -102,6 +110,11 @@ public class ChatServer {
             outFile.append(ent.getPass()+ "\n");
             outFile.close();
         }
+        /**
+         * Reads an Entry(consisting of a user and password from the file
+         * @return an Entry set with user and password
+         * @throws IOException 
+         */
         public ArrayList<Entry> readEntry() throws IOException
         {
             String user;
@@ -126,6 +139,11 @@ public class ChatServer {
             }
             return ret;
         }
+        /**
+         * Writes the chat log to a file
+         * @param p the String to be saved
+         * @throws IOException 
+         */
         public void saveLog(String p) throws IOException
         {
             PrintWriter outFile = new PrintWriter(new FileWriter("log.txt", true));
@@ -135,6 +153,11 @@ public class ChatServer {
             outFile.close();
         }
         
+        /**
+         * Reads a chat log from file
+         * @return A Queue of Strings consisting of all stored posts
+         * @throws IOException 
+         */
         public Queue<String> readLog() throws IOException
         {
             String post;
@@ -157,24 +180,22 @@ public class ChatServer {
             return ret;
         }
 
+        /**
+         * The main method of this program.  See documentation located on
+         * While loop below
+         */
         public void run() {
             try
             {
                 logins = readEntry();
                 log = readLog();
+                System.out.println(log);
             }
             catch(Exception eof)
             {
                 
             }
-            
-            //Debugging Variables
-            names.add("admin");
-            logins.add(new Entry("admin", "admin"));
-            System.out.println(log);
-            System.out.println(names);
-            System.out.println(logins);
-            
+                  
             login = new Entry();
             Entry check = new Entry();
             int step = 0; //Case Number
@@ -182,13 +203,23 @@ public class ChatServer {
             try {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
+                
+                /**
+                 * This is the main while loop.  This handles all of the logic
+                 * using the state() method.  By adjusting step, the program
+                 * moves forward and backward through the prompts
+                 */
                 while (true) {
                     out.println(state(step));
+                    /**
+                     * This first prompt allows the user to create a new
+                     * account or sign in to an existing one.  
+                     */
                     if (step == 0) {
                         System.out.println(state(step));
                         int newUser = 0;
                         newUser = in.read();
-                        System.out.println("FUCK:" + newUser);
+                        //System.out.println(newUser);
                         if (newUser == 48) {
                             in.readLine();
                             step = 1;
@@ -198,8 +229,12 @@ public class ChatServer {
                         } else {
                             step = 0;
                         }
-                        
                     }
+                    /**
+                     * This prompts the user for their user name to create
+                     * an account.  It also checks to make sure than username
+                     * is not already in use.  
+                     */
                     else if (step == 1) {
                         System.out.println(state(step));
                         String user = in.readLine();
@@ -213,26 +248,49 @@ public class ChatServer {
                             //step = 1;
                         }
                     } 
+                    /**
+                     * This prompts the user for a password to complete the 
+                     * create account process.  
+                     */
                     else if (step == 2) {
                         System.out.println(state(step));
                         String pass = in.readLine();
-                        if (!pass.equals("") && !logins.contains(login)) {
+                        if (!pass.equals("")) {
+                            boolean valid = true;
                             login.setPass(pass);
-                            System.out.println("PASS: " + pass);
-                            logins.add(login);
-                            try{
-                                saveEntry(login);
-                            }
-                            catch(Exception exserial)
+                            for(int i = 0; i < logins.size(); i++)
                             {
-                                
+                                if(logins.get(i).toString().equals(login))
+                                {
+                                    valid = false;
+                                }
                             }
-                            step = 4;
+                            if(valid)
+                            {
+                                System.out.println("PASS: " + pass);
+                                logins.add(login);
+                                try{
+                                    saveEntry(login);
+                                }
+                                catch(Exception exserial)
+                                {
+
+                                }
+                                step = 4;
+                            }
+                            else
+                            {
+                                step = 0;
+                            }
                            
                         } else {
                             step = 0;
                         }
-                    } 
+                    }
+                    /**
+                     * This prompts the user for an existing username and
+                     * checks that it exists in logins.  
+                     */
                     else if (step == 3) {
                         System.out.println(state(step));
                         String user = in.readLine();
@@ -244,6 +302,7 @@ public class ChatServer {
                                 if(logins.get(i).getUser().equals(check.getUser()))
                                 {
                                     name = user; 
+                                    names.add(name);
                                     step = 6;
                                     break;
                                 }
@@ -258,29 +317,100 @@ public class ChatServer {
                         else {
                         step = 0;
                         }
-                    } 
+                    }
+                    /**
+                     * After the user has successfully created an account or
+                     * signed in, they are taken here.  The while loop
+                     * below handles messaging.  
+                     */
                     else if (step == 4) {
                         System.out.println(state(step));
+                        HashSet<PrintWriter> temp = (HashSet<PrintWriter>) writers.clone();
                         //System.out.println(readLog());
-                        
+                        writers.clear();
                         writers.add(out);
+                        temp.add(out);
+                        /**
+                         * This for loop prints posts from the log.  
+                         */
+                        while(!log.isEmpty()){
+                            for (PrintWriter writer : writers) {
+                                System.out.println("writers loop: " + log.peek());
+                                writer.println("MESSAGE: " + log.peek());
+                            }
+                            log.remove();
+                        }
+                        writers = temp;
+                        /**
+                         * This while loop allows users to send messages to 
+                         * everyone signed in.  
+                         */
                         while (true) {
+                            date = new Date();
                             String input = in.readLine();
+                            
+                            //if(input.startsWith(""))
+                            
+                            //if(input.startsWith("TITLE"))
+                            //{
+                                //input += in.readLine();
+                            //}
                             log.add(input);
-                            System.out.println(log);
-                            //files.write(log, "log.txt");
                             //Where the server takes in chatted things
                             System.out.println(input);
                             if (input == null) {
                                 return;
                             }
+                            LogPost toLog = new LogPost("","","");
+                            LogPost post = new LogPost(name, input, date.toString());
+                            String toSend = "";
                             for (PrintWriter writer : writers) {
-                                
-                                writer.println("MESSAGE " + name + ": " + input);
-                                saveLog(input);
+                                if(input.contains("BODY"))
+                                {
+                                    //input = input.substring(6);
+                                    post = new LogPost(name, input, date.toString());
+                                    toSend = post.bodyToString().substring(6);
+                                    writer.println("MESSAGE: " + toSend);
+                                    toLog = post;
+                                    //saveLog(post.bodyToString());
+                                }
+                                else if(input.contains("TITLE"))
+                                {
+                                    //input = input.substring(7);
+                                    post = new LogPost(name, input, date.toString());
+                                    toSend = post.toString().substring(0,31 + name.length()) + post.toString().substring(38 + name.length());
+                                    writer.println("MESSAGE: " + toSend);
+                                    toLog = post;
+                                    //saveLog(post.toString());
+                                }
+                                else
+                                {
+                                    writer.println("MESSAGE: " + post.bodyToString());
+                                    toLog = post;
+                                    //saveLog(post.bodyToString());
+                                }
                             }
+                            String save = "";
+                            if(toLog.toString().contains("BODY"))
+                            {
+                                save = toLog.bodyToString().substring(6);
+                            }
+                            else if(toLog.toString().contains("TITLE"))
+                            {
+                                save = toLog.toString().substring(0,31 + name.length()) + toLog.toString().substring(38 + name.length());
+                            }
+                            else
+                            {
+                                save = toLog.bodyToString();
+                            }
+                            saveLog(save);
                         }
                     }
+                    /**
+                     * This prompts the user for a password to complete the
+                     * login process.  It also checks to make sure than the 
+                     * login the user is using exists.   
+                     */
                     else if(step == 6)
                     {
                         System.out.println(state(step));
@@ -310,6 +440,10 @@ public class ChatServer {
                 }
             } catch (Exception e) {
             } finally {
+                if(name != null)
+                {
+                    names.remove(name);
+                }
                 if (out != null) {
                     writers.remove(out);
                 }

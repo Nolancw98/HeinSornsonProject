@@ -6,7 +6,8 @@
 package smplatform;
 import java.io.Serializable;
 /**
- *
+ * Stores users and passwords as an object.  This makes it really easy 
+ * to save and manipulate the logins.  
  * @author nolancw98
  */
 public class Entry implements Serializable{

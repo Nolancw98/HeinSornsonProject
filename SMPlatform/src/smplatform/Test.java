@@ -10,6 +10,12 @@ package smplatform;
  * @author nolancw98
  */
 public class Test {
+    
+    /**
+     * I hope this is self-explaintory.  
+     * @param args 
+     */
+    
     public static void main(String[] args)
     {
         String test = "test";
