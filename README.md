@@ -1,4 +1,4 @@
-Welcome to Eddie and Nolan's Social Media Platform.  
+Welcome to Sockit.  
 
 This platform consists of two parts, a server and a client.
 
