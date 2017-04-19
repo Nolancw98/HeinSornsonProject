@@ -325,9 +325,11 @@ public class ChatServer {
                      */
                     else if (step == 4) {
                         System.out.println(state(step));
+                        HashSet<PrintWriter> temp = (HashSet<PrintWriter>) writers.clone();
                         //System.out.println(readLog());
-                        
+                        writers.clear();
                         writers.add(out);
+                        temp.add(out);
                         /**
                          * This for loop prints posts from the log.  
                          */
@@ -338,7 +340,7 @@ public class ChatServer {
                             }
                             log.remove();
                         }
-                        
+                        writers = temp;
                         /**
                          * This while loop allows users to send messages to 
                          * everyone signed in.  
