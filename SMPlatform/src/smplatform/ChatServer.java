@@ -36,7 +36,7 @@ public class ChatServer {
     private static Queue<String> log = new LinkedList<String>();
     
     // Instantiate a Date object
-    private static Date date = new Date();
+    private static Date date;
      
     public static void main(String[] args) throws Exception {
         //log = (Queue<String>) files.read("log.txt");
@@ -332,7 +332,7 @@ public class ChatServer {
                          * This for loop prints posts from the log.  
                          */
                         while(!log.isEmpty()){
-                            for (PrintWriter writer : writers) {    
+                            for (PrintWriter writer : writers) {
                                 System.out.println("writers loop: " + log.peek());
                                 writer.println("MESSAGE: " + log.peek());
                             }
@@ -344,6 +344,7 @@ public class ChatServer {
                          * everyone signed in.  
                          */
                         while (true) {
+                            date = new Date();
                             String input = in.readLine();
                             
                             //if(input.startsWith(""))
@@ -360,12 +361,14 @@ public class ChatServer {
                             }
                             LogPost toLog = new LogPost("","","");
                             LogPost post = new LogPost(name, input, date.toString());
+                            String toSend = "";
                             for (PrintWriter writer : writers) {
                                 if(input.contains("BODY"))
                                 {
                                     //input = input.substring(6);
                                     post = new LogPost(name, input, date.toString());
-                                    writer.println("MESSAGE: " + post.bodyToString());
+                                    toSend = post.bodyToString().substring(6);
+                                    writer.println("MESSAGE: " + toSend);
                                     toLog = post;
                                     //saveLog(post.bodyToString());
                                 }
@@ -373,7 +376,8 @@ public class ChatServer {
                                 {
                                     //input = input.substring(7);
                                     post = new LogPost(name, input, date.toString());
-                                    writer.println("MESSAGE: " + post.toString());
+                                    toSend = post.toString().substring(0,31 + name.length()) + post.toString().substring(38 + name.length());
+                                    writer.println("MESSAGE: " + toSend);
                                     toLog = post;
                                     //saveLog(post.toString());
                                 }
@@ -391,7 +395,7 @@ public class ChatServer {
                             }
                             else if(toLog.toString().contains("TITLE"))
                             {
-                                save = toLog.toString().substring(0, 37) + toLog.toString().substring(43);
+                                save = toLog.toString().substring(0,31 + name.length()) + toLog.toString().substring(38 + name.length());
                             }
                             else
                             {
